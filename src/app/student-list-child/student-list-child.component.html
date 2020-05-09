@@ -1,0 +1,22 @@
+<p>student-list-child works!</p>
+<div>
+    Name <input #elementRef type="text" [(ngModel)] ="name">
+    <p>Welcome !! {{name}}</p>
+</div>
+
+<div>
+    Customer Name <input  type="text" [(ngModel)] ="customerName">
+    <p>Welcome !!! {{customerName}}</p> 
+</div>
+<p>@Input() Example</p>
+{{parentToChildVar}}
+
+<p>@Input() example using getter and setter</p>
+{{parentparentToChildGetterSetter}}
+
+<br/>
+<p>{{message}}</p>
+
+<p>
+    <button (click) = "childGreet()">Greet</button>    
+</p>
