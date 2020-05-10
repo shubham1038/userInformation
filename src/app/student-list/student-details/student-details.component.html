@@ -1,0 +1,11 @@
+<h1 style="color:cornflowerblue;">Route And Navigation</h1>
+<div>
+    <ul class="items">
+        <li *ngFor ="let student of userList" >
+            <span (click) ="moveToStudentInfo(student)" [class.selected] ="isSelected(student)"  class="btn student-info">{{student.id}} - {{student.name}}</span> 
+        </li>
+    </ul>
+</div>
+<div style="align-items: center;">  
+    <button type="submit" class="btn btn-success" (click) ="moveBack()">Back</button>  
+</div>

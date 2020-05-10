@@ -1,0 +1,19 @@
+<p>Child3</p>
+
+<mat-card>
+    <mat-form-field class="example-form-field">
+        <mat-label>Two Way Binding</mat-label>
+        <input matInput type="text" [(ngModel)]="name">
+        <button mat-button *ngIf="name" matSuffix mat-icon-button aria-label="Clear" (click)="name=''">
+            <mat-icon>close</mat-icon>
+        </button>
+    </mat-form-field>
+    <mat-form-field class="example-form-field">
+        <mat-label>Two Way Binding with Getter-Setter</mat-label>
+        <input matInput type="text" [(ngModel)]="customerName">
+        <button mat-button *ngIf="customerName" matSuffix mat-icon-button aria-label="Clear" (click)="customerName=''">
+            <mat-icon>close</mat-icon>
+        </button>
+    </mat-form-field>
+    <p>Welcome !! {{name}} {{customerName}}</p>
+</mat-card>

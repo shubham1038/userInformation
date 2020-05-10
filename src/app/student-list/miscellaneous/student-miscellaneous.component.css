@@ -1,0 +1,104 @@
+.container {
+    width:900px; 
+    height: 150px;
+  }
+  
+  header {
+    width:900px; 
+    float:left; 
+    background: pink; 
+    height: 150px;
+  }
+  
+  .logo {
+    float: left;
+    padding: 15px
+  }
+  
+  .menu {
+    float: right;
+    padding: 15px;
+    animation: blinkingText 1.2s infinite;
+  }
+  
+  .first-box {
+    width:300px; 
+    float:left; 
+    background: green; 
+    height: 150px;
+    margin: 20px
+  }
+  
+  .first-box p {
+    color: #ffffff;
+    padding-left: 80px;
+    padding-top: 50px;
+  }
+  
+  .second-box {
+    width:300px; 
+    height: 150px; 
+    float:right; 
+    background:yellowgreen;
+    margin: 20px
+  }
+  
+  .second-box p {
+    color: #ffffff;
+    padding-left: 10px;
+    padding-top: 50px;
+  }
+
+  .fourth-box {
+    width:300px; 
+    height: 150px; 
+    float:right; 
+    background:blanchedalmond;
+    margin: 20px
+  }
+  
+  .fourth-box p {
+    color: #ffffff;
+    padding-left: 10px;
+    padding-top: 50px;
+  }
+
+  .third-box {
+    width:300px; 
+    float:left; 
+    background: darkorange; 
+    margin: 20px
+  }
+  
+  .third-box p {
+    color: #ffffff;
+    padding-left: 80px;
+    padding-top: 50px;
+  }
+
+  footer {
+    width:900px; 
+    float:left; 
+    background: black; 
+    height: 50px;
+    color: #ffffff;
+  }
+  
+  footer div {
+    padding: 15px;
+  }
+
+  .child2{
+    color:orangered;
+    font-size: large;
+    padding-left: 80px;
+    padding-top: 50px;
+  }
+
+  @keyframes blinkingText{
+    0%{     color: #000;    }
+    49%{    color: #000; }
+    60%{    color: transparent; }
+    99%{    color:transparent;  }
+    100%{   color: #000;    }
+}
