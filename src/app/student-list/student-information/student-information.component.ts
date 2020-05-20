@@ -9,6 +9,7 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 export class StudentInformationComponent implements OnInit {
 
   public studentId;
+  public headerVal: string = "Router using option parameter"
   constructor(private router: Router,
               private activatedRoute : ActivatedRoute) { }
 
@@ -39,6 +40,6 @@ export class StudentInformationComponent implements OnInit {
   }
 
   nextToInterceptor() : void{
-    this.router.navigate(['../../interceptor'], {relativeTo: this.activatedRoute})
+    this.router.navigate(['../../student-summary'], {relativeTo: this.activatedRoute})
   }
 }

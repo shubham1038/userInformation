@@ -24,3 +24,18 @@
     border-radius: 0.25rem;
     transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
+
+.blink{
+    color:tomato;
+    font-size: small;
+    padding-top: 10px;
+    animation: blinkingText 1.2s infinite;
+}
+
+@keyframes blinkingText{
+    0%{     color: mediumblue;    }
+    49%{    color: mediumblue; }
+    60%{    color: transparent; }
+    99%{    color:transparent;  }
+    100%{   color: mediumblue;    }
+}

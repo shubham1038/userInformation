@@ -4,4 +4,6 @@ example-button-row button,
 }
 hr.new4 {
   border: 1px solid red;
+  margin-top: .2rem; 
+  margin-bottom: .2rem;
 }

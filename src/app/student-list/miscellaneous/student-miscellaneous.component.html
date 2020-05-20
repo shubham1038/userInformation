@@ -1,23 +1,26 @@
+<app-header [headerValue]="headerVal"></app-header>
 <div class="container">
-
     <header>
         <div class="logo">Parent Component
-            <button mat-raised-button color="primary"  (click)="clickToChild()" >@ViewChild Button</button>
-            <button mat-raised-button color="primary"  (click)="clickToHello()" >Say Hello to Child-1</button>
+            <button mat-raised-button color="primary" (click)="clickToChild()">@ViewChild Button</button>
+            <button mat-raised-button color="primary" (click)="clickToHello()">Say Hello to Child-1</button>
             <button mat-raised-button color="accent" (click)="clickToThanks()">Say Thanks to Child-1</button>
-            
+
         </div>
         <div class="menu">{{childRespMessage}}</div>
-        <div class="child2" style="padding-top: 80px;">Parent to read this value using #child --- {{child2.child2Variable}}</div>
-        <button mat-raised-button color="accent" (click)="child2.great()"><span>Template  Ref concept using #</span></button>
+        <div class="child2" style="padding-top: 80px;">Parent to read this value using #child ---
+            {{child2.child2Variable}}</div>
+        <button mat-raised-button color="accent" (click)="child2.great()"><span>Template Ref concept using
+                #</span></button>
         <mat-form-field class="example-form-field" style="margin-left: 200px;">
             <mat-label>Parent to Child-4 - @Input Decorator</mat-label>
             <input matInput type="text" [(ngModel)]="inputDataTo4Child">
-            <button mat-button *ngIf="inputDataTo4Child" matSuffix mat-icon-button aria-label="Clear" (click)="inputDataTo4Child=''">
+            <button mat-button *ngIf="inputDataTo4Child" matSuffix mat-icon-button aria-label="Clear"
+                (click)="inputDataTo4Child=''">
                 <mat-icon>close</mat-icon>
             </button>
         </mat-form-field>
-       
+
     </header>
 
     <div class="first-box">
@@ -33,8 +36,8 @@
     </div>
 
     <div class="fourth-box">
-        <app-miscellaneous-child4 [parentDataToChild4]="inputDataTo4Child"
-           [parentToChild4Getter]= "inputDataTo4Child" (greetEvent) = "clickParentMethod($event)"></app-miscellaneous-child4>
+        <app-miscellaneous-child4 [parentDataToChild4]="inputDataTo4Child" [parentToChild4Getter]="inputDataTo4Child"
+            (greetEvent)="clickParentMethod($event)"></app-miscellaneous-child4>
     </div>
 
     <footer>

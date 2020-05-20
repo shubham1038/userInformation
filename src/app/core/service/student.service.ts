@@ -1,29 +1,31 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpParams, HttpHeaders } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { Observable, throwError, TimeoutError } from 'rxjs';
 import { Student } from '../model/student';
-import { catchError, retry } from 'rxjs/operators'
+import { catchError, retry, timeout, timeoutWith } from 'rxjs/operators'
 import { User } from '../model/user';
 import { Posts } from '../model/posts';
 import { Comments } from '../model/comments';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class StudentService {
 
   private baseUrl = "http://localhost:8081/api/";
 
   private baseUserUrl = "https://jsonplaceholder.typicode.com/";
+
   constructor(private http: HttpClient) {
 
   }
 
   getUserList(): Observable<User[]> {
+
     return this.http.get<User[]>(`${this.baseUserUrl}` + "users").pipe(
-      retry(5),
+      retry(0),
+      timeout(2000),
       catchError(err => {
-        return throwError(err.message || 'Server Error');
+        return this.http.get<User[]>('assets/data/users.json');
+        //return throwError(err.message || 'Server Error');
       })
     );
   }
@@ -68,7 +70,7 @@ export class StudentService {
   updateStudent(id: number, value: User): Observable<Object> {
     return this.http.post(`${this.baseUserUrl}users/${id}`, value);
   }
-  
+
   getAllPostCall(): Observable<any> {
     return this.http.get('https://jsonplaceholder.typicode.com/todos/1');
   }
@@ -88,17 +90,18 @@ export class StudentService {
   }
 
   getUsers() {
-    return this.http.get<User>('https://jsonplaceholder.typicode.com/users')
+    //https://jsonplaceholder.typicode.com/users --Replace with JSON as open api is not working sometimes
+    return this.http.get<User>('assets/data/users.json')
       .toPromise();
   }
-
+  //`https://jsonplaceholder.typicode.com/posts?userId=${userId}`
   getUserPosts(userId) {
-    return this.http.get<Posts>(`https://jsonplaceholder.typicode.com/posts?userId=${userId}`)
+    return this.http.get<Posts>('assets/data/posts.json')
       .toPromise();
   }
-
+  //`https://jsonplaceholder.typicode.com/comments?postId=${postId}`
   getPostComments(postId) {
-    return this.http.get<Comments>(`https://jsonplaceholder.typicode.com/comments?postId=${postId}`)
+    return this.http.get<Comments>('assets/data/comments.json')
       .toPromise();
   }
 

@@ -6,7 +6,7 @@
     </div>
   </div>
   <div class="panel-heading">
-    <h1 style="text-align: center">User Information</h1><br>
+    <app-header [headerValue] = "headerVal"></app-header> 
     <div class="row" [hidden]="!deleteMessage">
 
       <div class="col-sm-4"></div>
@@ -96,3 +96,6 @@
 <div style="align-items: center;">
   <button type="submit" class="btn btn-success" (click)="moveNext()">Next</button>
 </div>
+<ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">  
+  <p style="color: white">Please Wait. </p>  
+  </ngx-spinner> 

@@ -2,9 +2,7 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { User } from '../model/user';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class InteractionService {
 
   public _user :User;

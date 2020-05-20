@@ -1,0 +1,15 @@
+.header{
+    text-align: center;
+    font: 400 24px/32px Roboto, "Helvetica Neue", sans-serif;
+    padding-bottom: 10px;
+    color:white;
+    border: 1px solid darkorchid ;
+    background-color: palevioletred;
+    
+}
+
+hr.new4 {
+    border: 1px solid red;
+    margin-top: .2rem; 
+    margin-bottom: .2rem;
+  }

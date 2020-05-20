@@ -8,12 +8,17 @@ import {MatIconModule} from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 import { MiscellaneousChild3Component } from './miscellaneous/miscellaneous-child3/miscellaneous-child3.component';
 import { MiscellaneousChild4Component } from './miscellaneous/miscellaneous-child4/miscellaneous-child4.component';
+import { NgxSpinnerModule } from "ngx-spinner";
+import { StudentSummaryComponent } from './student-summary/student-summary.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
     studentRoutingComponents,
     MiscellaneousChild3Component,
-    MiscellaneousChild4Component
+    MiscellaneousChild4Component,
+    StudentSummaryComponent,
+    
   ],
   imports: [
     CommonModule,
@@ -22,8 +27,9 @@ import { MiscellaneousChild4Component } from './miscellaneous/miscellaneous-chil
     MatButtonModule,
     MatCardModule,
     MatInputModule,
-    MatIconModule
-
+    MatIconModule,
+    NgxSpinnerModule,
+    SharedModule
   ]
 })
 export class StudentListModule { }

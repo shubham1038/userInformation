@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { InteractionService } from 'src/app/service/interaction.service';
+import { InteractionService } from 'src/app/core/service/interaction.service';
 
 @Component({
   selector: 'app-miscellaneous-child1',

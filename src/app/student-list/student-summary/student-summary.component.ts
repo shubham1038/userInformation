@@ -1,30 +1,34 @@
 import { Component, OnInit } from '@angular/core';
-import { StudentService } from 'src/app/service/student.service';
+import { StudentService } from 'src/app/core/service/student.service';
 import { Subject } from 'rxjs';
-import { AppLoaderService } from '../app-loader.service';
-import { User } from 'src/app/model/user';
-import { Posts } from 'src/app/model/posts';
-import { Comments } from 'src/app/model/comments';
+import { User } from 'src/app/core/model/user';
+import { Posts } from 'src/app/core/model/posts';
+import { Comments } from 'src/app/core/model/comments';
+import { delay, delayWhen } from 'rxjs/operators';
+import { AppLoaderService } from 'src/app/core';
 
 @Component({
-  selector: 'app-app-interceptor',
-  templateUrl: './app-interceptor.component.html',
-  styleUrls: ['./app-interceptor.component.css']
+  selector: 'app-student-summary',
+  templateUrl: './student-summary.component.html',
+  styleUrls: ['./student-summary.component.css']
 })
-export class AppInterceptorComponent implements OnInit {
+export class StudentSummaryComponent implements OnInit {
 
   errorMessage: string;
   loadingValue: String;
   users: User;
   posts: Posts;
   comments: Comments;
+  headerVal: string = 'Async call using Angular Promise or await';
 
   constructor(private serviceService: StudentService,
     private loaderService: AppLoaderService) { }
+
   title = 'my-http-interceptor';
   isLoading: Subject<String>;
 
   ngOnInit() {
+    this.loaderService.show();
     this.loaderService.isLoading.subscribe(
       data => this.loadingValue = data
     );
@@ -51,14 +55,12 @@ export class AppInterceptorComponent implements OnInit {
   async getAllData() {
     const users = await this.serviceService.getUsers();
     this.users = users;
+
     const posts = await this.serviceService.getUserPosts(users[0].id);
     this.posts = posts;
-    const comments = await this.serviceService.getPostComments(posts[0].id);
 
+    const comments = await this.serviceService.getPostComments(posts[0].id);
     this.comments = comments;
-    console.log(users);
-    console.log(posts);
-    console.log(comments);
   }
 
 
@@ -68,6 +70,7 @@ export class AppInterceptorComponent implements OnInit {
 
     this.serviceService.getUsers().then(users => {
       this.users = users
+      delay(8000);
       this.serviceService.getUserPosts(users[0].id).then(posts => {
         this.posts = posts;
         this.serviceService.getPostComments(posts[0].id).then(comm => {
@@ -76,19 +79,14 @@ export class AppInterceptorComponent implements OnInit {
       })
     }).catch(error => {
       this.loaderService.hide()
-      this.errorMessage=error.message
+      this.errorMessage = error.message
     })
-
-
 
     /* const users = await this.serviceService.getUsers();
      this.users = JSON.stringify(users);
      const posts = await this.serviceService.getUserPosts(users[0].id);
      this.posts =JSON.stringify(posts);
      const comments = await this.serviceService.getPostComments(posts[0].id);*/
-
-
-
   }
 
 }

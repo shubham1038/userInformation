@@ -1,11 +1,19 @@
-<h1 style="color:cornflowerblue;">Route And Navigation</h1>
+<app-header [headerValue]="headerVal"></app-header>
 <div>
     <ul class="items">
-        <li *ngFor ="let student of userList" >
-            <span (click) ="moveToStudentInfo(student)" [class.selected] ="isSelected(student)"  class="btn student-info">{{student.id}} - {{student.name}}</span> 
+        <li *ngFor="let student of userList">
+            <span (click)="moveToStudentInfo(student)" [class.selected]="isSelected(student)"
+                class="btn student-info">{{student.id}} - {{student.name}}
+            </span>
+            <span class="blink">
+                Click Me
+            </span>
         </li>
     </ul>
 </div>
-<div style="align-items: center;">  
-    <button type="submit" class="btn btn-success" (click) ="moveBack()">Back</button>  
+<div style="align-items: center;">
+    <button type="submit" class="btn btn-success" (click)="moveBack()">Back</button>
 </div>
+<ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">
+    <p style="color: white">Please Wait. </p>
+</ngx-spinner>
