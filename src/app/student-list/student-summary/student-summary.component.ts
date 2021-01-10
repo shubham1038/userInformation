@@ -16,7 +16,7 @@ export class StudentSummaryComponent implements OnInit {
 
   errorMessage: string;
   loadingValue: String;
-  users: User;
+  users: User[];
   posts: Posts;
   comments: Comments;
   headerVal: string = 'Async call using Angular Promise or await';

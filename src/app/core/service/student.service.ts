@@ -12,15 +12,16 @@ export class StudentService {
 
   private baseUrl = "http://localhost:8081/api/";
 
-  private baseUserUrl = "https://jsonplaceholder.typicode.com/";
-
+  //private baseUserUrl = "http://ec2-15-206-159-184.ap-south-1.compute.amazonaws.com/fse-pm-app/api/";
+  private baseUserUrl = "https://shubh1038.xyz/fse-pm-app/api/";
+  
   constructor(private http: HttpClient) {
 
   }
 
   getUserList(): Observable<User[]> {
 
-    return this.http.get<User[]>(`${this.baseUserUrl}` + "users").pipe(
+    return this.http.get<User[]>(`${this.baseUserUrl}` + "user-list").pipe(
       retry(0),
       timeout(2000),
       catchError(err => {
@@ -31,7 +32,7 @@ export class StudentService {
   }
 
   getStudentList(): Observable<any> {
-    return this.http.get(`${this.baseUrl}` + "students-list").pipe(
+    return this.http.get(`${this.baseUserUrl}` + "user-list").pipe(
       retry(5),
       catchError(err => {
         return throwError(err.message || 'Server Error');
@@ -40,15 +41,15 @@ export class StudentService {
   }
 
   createStudent(student: Object): Observable<Object> {
-    return this.http.post(`${this.baseUrl}` + 'save-student', student);
+    return this.http.post(`${this.baseUserUrl}` + 'save-user', student);
   }
 
   deleteStudent(id: number): Observable<Object> {
-    return this.http.delete(`${this.baseUrl}` + 'delete-student/' + `${id}`, { responseType: 'text' });
+    return this.http.delete(`${this.baseUserUrl}` + 'delete-user/' + `${id}`, { responseType: 'text' });
   }
 
   getUser(id: number): Observable<User> {
-    return this.http.get<User>(`${this.baseUserUrl}` + 'users/' + `${id}`)
+    return this.http.get<User>(`${this.baseUserUrl}` + 'user/' + `${id}`)
       .pipe(
         retry(1),
         catchError(this.errorHandler)
@@ -63,13 +64,13 @@ export class StudentService {
       )
   }*/
 
-  /*updateStudent(id: number, value: any): Observable<Object> {
-    return this.http.post(`${this.baseUrl}/update-student/${id}`, value);
-  }*/
-
   updateStudent(id: number, value: User): Observable<Object> {
-    return this.http.post(`${this.baseUserUrl}users/${id}`, value);
+    return this.http.post(`${this.baseUserUrl}/update-user/${id}`, value);
   }
+
+  // updateStudent(id: number, value: User): Observable<Object> {
+  //   return this.http.post(`${this.baseUserUrl}users/${id}`, value);
+  // }
 
   getAllPostCall(): Observable<any> {
     return this.http.get('https://jsonplaceholder.typicode.com/todos/1');
@@ -91,7 +92,7 @@ export class StudentService {
 
   getUsers() {
     //https://jsonplaceholder.typicode.com/users --Replace with JSON as open api is not working sometimes
-    return this.http.get<User>('assets/data/users.json')
+    return this.getUserList()
       .toPromise();
   }
   //`https://jsonplaceholder.typicode.com/posts?userId=${userId}`

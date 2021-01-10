@@ -27,12 +27,10 @@ export class StudentListComponent implements OnInit, AfterViewInit {
   public addedUser = new User();
   student: Student = new Student();
   public isupdatedMess: boolean = true;
-  //public parentData ='I am Sending data from Parent Componet';
   public parentDataUsingGetterSetter = 'I am Sending data from Parent Componet Using Getter Setter'
   public errorMsg: string;
   public isErrorMessage: boolean = false;
-  public headerVal:string = 'User Information';
-  // @ViewChild(StudentListChildComponent) childComponentRef : StudentListChildComponent;
+  public headerVal: string = 'User Information';
 
   constructor(private studentservice: StudentService,
     private inreractionService: InteractionService,
@@ -40,94 +38,78 @@ export class StudentListComponent implements OnInit, AfterViewInit {
     private spinner: NgxSpinnerService,
     private modalService: ModalService) { }
   ngAfterViewInit(): void {
-    //this.childComponentRef.message ='Message from Parent Component';
   }
 
   moveNext(): void {
     this.route.navigate(['/student/student-details'])
   }
-  // clickToHello(){
-  //   this.inreractionService.sentMessage('Good Morning Child')
-  // }
 
-  // clickToThanks(){
-  //   this.inreractionService.sentMessage('Thanks Child')
-  // }
-
-
-  // clickToChild(){
-  //   this.childComponentRef.message = 'Message from Parent Component';
-  // }
   ngOnInit(): void {
     this.isupdated = false;
     this.spinner.show();
     this.inreractionService.user$.subscribe(
       user => {
-
         this.addedUser = user;
         console.log(this.addedUser);
 
       }
     )
-    this.studentservice.getUserList()
-      .subscribe(
-        data => {
-          // console.log(this.inreractionService._user);
-          /// if(this.addedUser)
-          //if (isEmpty(this.addedUser))
-          if (this.inreractionService._user) {
-            data.length
-            this.inreractionService._user.id = data.length + 1
-            data.push(this.inreractionService._user);
-            // console.log(data1);
-          }
-          this.userList = data;
-          this.spinner.hide();
-        },
-        error => {
-          this.errorMsg = error;
-          this.isErrorMessage = true;
-        }
-      )
 
-    /*this.studentservice.getStudentList()
+
+    this.studentservice.getStudentList()
       .subscribe(
         data => {
-          this.studentList = data;
+          this.userList = data;
         },
         err => {
           this.errorMsg = err;
           this.isErrorMessage = true;
+          this.studentservice.getUserList()
+            .subscribe(
+              data => {
+                if (this.inreractionService._user) {
+                  data.length
+                  this.inreractionService._user.id = data.length + 1
+                  data.push(this.inreractionService._user);
+                }
+                this.userList = data;
+                this.spinner.hide();
+              },
+              error => {
+                this.errorMsg = error;
+                this.isErrorMessage = true;
+              }
+            )
         }
-      )*/
+      )
   }
 
   deleteStudent(id: number) {
 
-    this.studentservice.getUserList()
-      .subscribe(
+    this.studentservice.deleteStudent(id).subscribe(data => {
+      console.log(data)
+      this.studentservice.getStudentList().subscribe(
         data => {
-          this.userList = data.filter(x => x.id != id);
           this.deleteMessage = true;
+          console.log(data)
+          this.userList = data;
           this.modalService.confirmOK('User Data Deleted', () => { }, "Success")
-          //this.userList = data;
         }
       )
-
-
-    /* this.studentservice.deleteStudent(id).subscribe(data => {
-       console.log(data)
-       this.studentservice.getStudentList().subscribe(
-         data => {
-           this.deleteMessage = true;
-           console.log(data)
-           this.studentList = data;
-         }
-       )
-     },
-       error => { console.log(error) 
-       }
-     )*/
+    },
+      error => {
+        console.log(error);
+        this.studentservice.getUserList()
+          .subscribe(
+            data => {
+              this.userList = data.filter(x => x.id != id);
+              this.deleteMessage = true;
+              this.modalService.confirmOK('User Data Deleted', () => { }, "Success")
+              //this.userList = data;
+            }
+          )
+      }
+    )
   }
 
   updateStudent(id: number) {
@@ -135,7 +117,7 @@ export class StudentListComponent implements OnInit, AfterViewInit {
     this.studentservice.getUser(id).subscribe(
       data => {
         this.isupdated = true;
-        this.user = data
+        this.user = data[0]
       },
       error => console.log(error.message)
     );
@@ -154,32 +136,35 @@ export class StudentListComponent implements OnInit, AfterViewInit {
     this.user.email = this.StudentEmail.value;
     // this.student.student_branch=this.StudentBranch.value;  
     // console.log(this.StudentBranch.value);
-    this.studentservice.getUserList().subscribe(
-      data => {
-        this.userList = data.map(
-          user => {
-            if (user.id === this.user.id) {
-              user.name = this.user.name;
-              user.email = this.user.email;
-              return user;
-            } else {
-              return user;
-            }
-          }
-        )
-      }, error => console.log(error)
-    );
 
-    /*this.studentservice.updateStudent(this.user.id,this.user).subscribe(  
-     data => {       
-       this.isupdated=true;  
-       this.studentservice.getStudentList().subscribe(data =>{  
-         this.isupdatedMess = false;
-         this.studentList =data  
-         })  
-     },  
-     error => console.log(error)); */
-  }
+
+    this.studentservice.updateStudent(this.user.id, this.user).subscribe(
+      data => {
+        this.isupdated = true;
+        this.studentservice.getStudentList().subscribe(data => {
+          this.isupdatedMess = false;
+          this.userList = data
+        })
+      },
+      error => {
+        console.log(error);
+        this.studentservice.getUserList().subscribe(
+          data => {
+            this.userList = data.map(
+              user => {
+                if (user.id === this.user.id) {
+                  user.name = this.user.name;
+                  user.email = this.user.email;
+                  return user;
+                } else {
+                  return user;
+                }
+              }
+            )
+          }, error => console.log(error)
+        );
+      })
+  };
 
   /* updateStu(updstu : any){  
        this.student=new Student();   
@@ -206,10 +191,6 @@ export class StudentListComponent implements OnInit, AfterViewInit {
     return this.studentupdateform.get('email');
   }
 
-  /*get StudentBranch(){  
-    return this.studentupdateform.get('student_branch');  
-  }  */
-
   get StudentId() {
     return this.studentupdateform.get('id');
   }
@@ -217,10 +198,6 @@ export class StudentListComponent implements OnInit, AfterViewInit {
   changeisUpdate() {
     this.isupdated = false;
   }
-
-  // clickParentMethod(message :string){
-  //   alert('HiHihhi' + message);
-  // }
 
   hideError(): void {
     this.isErrorMessage = false;
